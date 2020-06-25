@@ -7,12 +7,10 @@ import crypto from 'crypto';
 const defaultContext: {
   clientId: null | string;
   clientSecret: null | string;
-  channelId: null | string;
   getToken: (options: NormalizedOptions) => Promise<string | null>;
 } = {
   clientId: null,
   clientSecret: null,
-  channelId: null,
   getToken: async () => null,
 };
 
@@ -94,23 +92,19 @@ function createSign({ payload }: { payload: string }): string {
 export const configure = ({
   clientId,
   clientSecret,
-  channelId,
   getToken,
 }: {
   clientId: string;
   clientSecret: string;
-  channelId: string;
   getToken: (options: NormalizedOptions) => Promise<string | null>;
 }): void => {
   assert(clientId, 'clientId required');
   assert(clientSecret, 'clientSecret required');
-  assert(channelId, 'channelId required');
   assert(getToken, 'getToken required');
 
   Object.assign(defaultContext, {
     clientId,
     clientSecret,
-    channelId,
     getToken,
   });
 };

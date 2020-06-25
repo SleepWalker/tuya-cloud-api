@@ -29,11 +29,10 @@ class TuyaApi {
     promise: Promise.resolve(''),
   };
 
-  async authorize({ apiClientId, apiClientSecret, apiChannelId }) {
+  async authorize({ apiClientId, apiClientSecret }) {
     configure({
       clientId: apiClientId,
       clientSecret: apiClientSecret,
-      channelId: apiChannelId,
       getToken: (options) => this.getTokenForRequest(options),
     });
   }
