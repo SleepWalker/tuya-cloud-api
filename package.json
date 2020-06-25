@@ -1,0 +1,84 @@
+{
+  "name": "tuya-cloud-api",
+  "version": "1.0.0",
+  "description": "A nodejs implementation of tuya cloud api: https://docs.tuya.com/en/iot/open-api/api-list/api/api",
+  "keywords": [
+    "tuya",
+    "tuya cloud"
+  ],
+  "author": "SleepWalker <dev@udf.su>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SleepWalker/tuya-cloud-api.git"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "engines": {
+    "node": ">=10.0.0"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "prepublish": "yarn ci:check && yarn build",
+    "postversion": "git push origin HEAD --no-verify --tags",
+    "build": "rm -fr ./dist && tsc -d --declaration --noEmit false --outDir ./dist",
+    "test": "jest",
+    "lint": "eslint --fix .",
+    "lint:check": "eslint --quiet .",
+    "prettier": "prettier --write .",
+    "prettier:check": "prettier --check .",
+    "ts:check": "tsc",
+    "ci:check": "yarn lint:check && yarn ts:check && yarn test"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "yarn ci:check"
+    }
+  },
+  "lint-staged": {
+    "*.{json,md}": [
+      "prettier --write"
+    ],
+    "*.{js,ts}": [
+      "eslint --fix"
+    ]
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "resetMocks": true,
+    "restoreMocks": true,
+    "testMatch": [
+      "**/?(*.)+(spec|test).[jt]s?(x)"
+    ],
+    "watchPlugins": [
+      "jest-watch-typeahead/filename",
+      "jest-watch-typeahead/testname"
+    ]
+  },
+  "dependencies": {
+    "got": "^11.3.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.10.3",
+    "@babel/node": "^7.10.3",
+    "@babel/preset-env": "^7.10.3",
+    "@babel/preset-typescript": "^7.10.1",
+    "@types/jest": "^26.0.3",
+    "@types/node": "^14.0.14",
+    "@typescript-eslint/eslint-plugin": "^3.4.0",
+    "@typescript-eslint/parser": "^3.4.0",
+    "eslint": "^7.3.1",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.21.2",
+    "eslint-plugin-prettier": "^3.1.4",
+    "husky": "^4.2.5",
+    "jest": "^26.1.0",
+    "jest-watch-typeahead": "^0.6.0",
+    "lint-staged": "^10.2.11",
+    "prettier": "^2.0.5",
+    "typescript": "^3.9.5"
+  }
+}

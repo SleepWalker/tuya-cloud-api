@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es2018",
+    "resolveJsonModule": true,
+    "esModuleInterop": true, // allow importing commonjs exports as default in es imports
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "noEmit": true,
+    "checkJs": true,
+    "allowJs": true,
+    "strictNullChecks": true
+  },
+  "include": ["./src"]
+}
