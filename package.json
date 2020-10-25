@@ -30,7 +30,7 @@
     "ts:check": "tsc",
     "ci:check": "yarn lint:check && yarn ts:check && yarn test",
     "release": "export $(cat .env | xargs) && semantic-release",
-    "release:check": "export $(cat .env | xargs) && semantic-release --dry-run --debug"
+    "release:check": "export $(cat .env | xargs) && semantic-release --dry-run"
   },
   "husky": {
     "hooks": {
