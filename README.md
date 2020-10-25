@@ -35,6 +35,8 @@ async function toggleDevice(deviceId, state = false) {
   await tuyaApi.authorize({
     apiClientId,
     apiClientSecret,
+    // Optionally you can select which server to use
+    // serverLocation: 'eu',
   });
 
   // get fresh device info
