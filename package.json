@@ -10,7 +10,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/SleepWalker/tuya-cloud-api.git"
+    "url": "git@github.com:SleepWalker/tuya-cloud-api.git"
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -21,8 +21,6 @@
     "dist"
   ],
   "scripts": {
-    "prepublish": "yarn ci:check && yarn build",
-    "postversion": "git push origin HEAD --no-verify --tags",
     "build": "rm -fr ./dist && tsc -d --declaration --noEmit false --outDir ./dist",
     "test": "jest",
     "lint": "eslint --fix .",
@@ -30,7 +28,9 @@
     "prettier": "prettier --write .",
     "prettier:check": "prettier --check .",
     "ts:check": "tsc",
-    "ci:check": "yarn lint:check && yarn ts:check && yarn test"
+    "ci:check": "yarn lint:check && yarn ts:check && yarn test",
+    "release": "export $(cat .env | xargs) && semantic-release",
+    "release:check": "export $(cat .env | xargs) && semantic-release --dry-run --debug"
   },
   "husky": {
     "hooks": {
@@ -59,26 +59,31 @@
     ]
   },
   "dependencies": {
-    "got": "^11.3.0"
+    "got": "^11.8.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.10.3",
-    "@babel/node": "^7.10.3",
-    "@babel/preset-env": "^7.10.3",
-    "@babel/preset-typescript": "^7.10.1",
-    "@types/jest": "^26.0.3",
-    "@types/node": "^14.0.14",
-    "@typescript-eslint/eslint-plugin": "^3.4.0",
-    "@typescript-eslint/parser": "^3.4.0",
-    "eslint": "^7.3.1",
-    "eslint-config-prettier": "^6.11.0",
-    "eslint-plugin-import": "^2.21.2",
+    "@babel/core": "^7.12.3",
+    "@babel/node": "^7.12.1",
+    "@babel/preset-env": "^7.12.1",
+    "@babel/preset-typescript": "^7.12.1",
+    "@semantic-release/changelog": "^5.0.1",
+    "@semantic-release/exec": "^5.0.0",
+    "@semantic-release/git": "^9.0.0",
+    "@types/jest": "^26.0.15",
+    "@types/node": "^14.14.2",
+    "@typescript-eslint/eslint-plugin": "^4.5.0",
+    "@typescript-eslint/parser": "^4.5.0",
+    "conventional-changelog-conventionalcommits": "^4.4.0",
+    "eslint": "^7.12.0",
+    "eslint-config-prettier": "^6.14.0",
+    "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-prettier": "^3.1.4",
-    "husky": "^4.2.5",
-    "jest": "^26.1.0",
-    "jest-watch-typeahead": "^0.6.0",
-    "lint-staged": "^10.2.11",
-    "prettier": "^2.0.5",
-    "typescript": "^3.9.5"
+    "husky": "^4.3.0",
+    "jest": "^26.6.1",
+    "jest-watch-typeahead": "^0.6.1",
+    "lint-staged": "^10.4.2",
+    "prettier": "^2.1.2",
+    "semantic-release": "^17.2.1",
+    "typescript": "^4.0.3"
   }
 }
