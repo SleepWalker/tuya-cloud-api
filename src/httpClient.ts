@@ -4,18 +4,26 @@ import got from 'got';
 import assert from 'assert';
 import crypto from 'crypto';
 
+const availableEndpoints = {
+  eu: 'https://openapi.tuyaeu.com/v1.0',
+  cn: 'https://openapi.tuyacn.com/v1.0',
+  us: 'https://openapi.tuyaus.com/v1.0',
+  in: 'https://openapi.tuyain.com/v1.0',
+};
+
 const defaultContext: {
   clientId: null | string;
   clientSecret: null | string;
+  prefixUrl: string;
   getToken: (options: NormalizedOptions) => Promise<string | null>;
 } = {
   clientId: null,
   clientSecret: null,
+  prefixUrl: availableEndpoints.eu,
   getToken: async () => null,
 };
 
 export const httpClient = got.extend({
-  prefixUrl: 'https://openapi.tuyaeu.com/v1.0/',
   responseType: 'json',
   retry: {
     limit: 4,
@@ -27,13 +35,22 @@ export const httpClient = got.extend({
     ],
   },
   hooks: {
+    init: [
+      (options) => {
+        const { prefixUrl } = defaultContext;
+
+        options.prefixUrl = `${prefixUrl}/`;
+      },
+    ],
+
     beforeRequest: [
       async (options) => {
         const { clientId, getToken } = defaultContext;
-        const now = Date.now();
         const accessToken = await getToken(options);
 
         assert(clientId, 'client id is required for request');
+
+        const now = Date.now();
 
         options.headers.client_id = clientId;
         options.headers.sign = createSign({
@@ -93,18 +110,24 @@ export const configure = ({
   clientId,
   clientSecret,
   getToken,
+  serverLocation = 'eu',
 }: {
   clientId: string;
   clientSecret: string;
   getToken: (options: NormalizedOptions) => Promise<string | null>;
+  serverLocation?: string;
 }): void => {
+  const prefixUrl = availableEndpoints[serverLocation];
+
   assert(clientId, 'clientId required');
   assert(clientSecret, 'clientSecret required');
   assert(getToken, 'getToken required');
+  assert(prefixUrl, `Unknown serverLocation: ${serverLocation}`);
 
   Object.assign(defaultContext, {
     clientId,
     clientSecret,
+    prefixUrl,
     getToken,
   });
 };
