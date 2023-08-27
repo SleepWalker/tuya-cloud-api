@@ -52,9 +52,20 @@ export const httpClient = got.extend({
 
         const now = Date.now();
 
+        const { url, method, json } = options;
+
+        const signString = stringToSign(
+          method.toUpperCase(),
+          JSON.stringify(json),
+          '',
+          `${url.pathname}${url.search}`,
+        );
+
         options.headers.client_id = clientId;
         options.headers.sign = createSign({
-          payload: [clientId, accessToken, now].filter(Boolean).join(''),
+          payload: [clientId, accessToken, now, signString]
+            .filter(Boolean)
+            .join(''),
         });
         options.headers.t = String(now);
         options.headers.sign_method = 'HMAC-SHA256';
@@ -93,6 +104,12 @@ export const httpClient = got.extend({
     ],
   },
 });
+
+function stringToSign(method, body = '', headers = '', url) {
+  const sha256 = crypto.createHash('sha256').update(body).digest('hex');
+
+  return `${method}\n${sha256}\n${headers}\n${url}`;
+}
 
 function createSign({ payload }: { payload: string }): string {
   const { clientSecret } = defaultContext;
