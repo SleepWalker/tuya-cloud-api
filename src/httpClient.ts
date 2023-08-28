@@ -4,6 +4,8 @@ import got from 'got';
 import assert from 'assert';
 import crypto from 'crypto';
 
+import { createStringToSign } from './createStringToSign';
+
 const availableEndpoints = {
   eu: 'https://openapi.tuyaeu.com/v1.0',
   cn: 'https://openapi.tuyacn.com/v1.0',
@@ -54,16 +56,17 @@ export const httpClient = got.extend({
 
         const { url, method, json } = options;
 
-        const signString = stringToSign(
-          method.toUpperCase(),
-          JSON.stringify(json),
-          '',
-          `${url.pathname}${url.search}`,
-        );
+        const stringToSign = createStringToSign({
+          url,
+          method: method.toUpperCase(),
+          body: json,
+          // TODO: add Signature-Headers support
+          // https://developer.tuya.com/en/docs/iot/new-singnature?id=Kbw0q34cs2e5g#title-5-Headers
+        });
 
         options.headers.client_id = clientId;
         options.headers.sign = createSign({
-          payload: [clientId, accessToken, now, signString]
+          payload: [clientId, accessToken, now, stringToSign]
             .filter(Boolean)
             .join(''),
         });
@@ -115,12 +118,6 @@ function createSign({ payload }: { payload: string }): string {
     .update(payload)
     .digest('hex')
     .toUpperCase();
-}
-
-function stringToSign(method, body = '', headers = '', url) {
-  const sha256 = crypto.createHash('sha256').update(body).digest('hex');
-
-  return `${method}\n${sha256}\n${headers}\n${url}`;
 }
 
 export const configure = ({
