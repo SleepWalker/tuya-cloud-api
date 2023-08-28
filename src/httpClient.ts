@@ -117,7 +117,7 @@ function createSign({ payload }: { payload: string }): string {
     .toUpperCase();
 }
 
-function stringToSign(method, body = '', headers: '', url) {
+function stringToSign(method, body = '', headers = '', url) {
   const sha256 = crypto.createHash('sha256').update(body).digest('hex');
 
   return `${method}\n${sha256}\n${headers}\n${url}`;
