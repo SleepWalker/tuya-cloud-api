@@ -1,6 +1,13 @@
 # Changelog
 
 
+### [1.2.1](https://github.com/SleepWalker/tuya-cloud-api/compare/v1.2.0...v1.2.1) (2023-08-28)
+
+
+### Bug Fixes
+
+* correct typo in stringToSing function ([#32](https://github.com/SleepWalker/tuya-cloud-api/issues/32)) ([d7584f8](https://github.com/SleepWalker/tuya-cloud-api/commit/d7584f86e6364fe0a061fc6e8f34c2f71bf629cf))
+
 ## [1.2.0](https://github.com/SleepWalker/tuya-cloud-api/compare/v1.1.0...v1.2.0) (2023-08-28)
 
 
