@@ -29,7 +29,7 @@
     "prettier:check": "prettier --check .",
     "ts:check": "tsc",
     "ci:check": "yarn lint:check && yarn ts:check && yarn test",
-    "release": "export $(cat .env | xargs) && semantic-release",
+    "release": "export $(cat .env | xargs) && semantic-release --no-ci",
     "release:check": "export $(cat .env | xargs) && semantic-release --dry-run"
   },
   "husky": {
