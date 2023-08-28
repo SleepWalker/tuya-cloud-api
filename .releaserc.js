@@ -20,8 +20,8 @@ module.exports = {
     [
       '@semantic-release/exec',
       {
-        verifyConditionsCmd: 'yarn ci:check',
-        prepareCmd: 'yarn build',
+        verifyConditionsCmd: 'npm run ci:check',
+        prepareCmd: 'npm run build',
       },
     ],
     [

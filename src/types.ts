@@ -2,7 +2,7 @@
  * NOTE: this file should have *.ts extension instead of *.d.ts otherwise
  * typescript will skip it during build
  */
-export interface BaseResponse<R extends any> {
+export interface BaseResponse<R> {
   result: R;
   success: boolean;
   t: number; // timestamp

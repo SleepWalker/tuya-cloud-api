@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# exit if we are in ci environment
+[ -n "$CI" ] && exit 0
+
+. "$(dirname "$0")/_/husky.sh"
+
+npm run ci:check
