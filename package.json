@@ -1,6 +1,6 @@
 {
   "name": "tuya-cloud-api",
-  "version": "1.2.1",
+  "version": "2.0.0",
   "description": "A nodejs implementation of tuya cloud api: https://docs.tuya.com/en/iot/open-api/api-list/api/api",
   "keywords": [
     "tuya",
